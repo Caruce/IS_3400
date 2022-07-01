@@ -1,0 +1,448 @@
+/* Start of Code */
+
+/* Create DRUG, OFFICE, PHYSICIAN, NURSE£¬ PATIENT without any FK definitions */
+
+CREATE TABLE DRUG(
+
+DrugID			Int  			NOT NULL,
+NatDrugCode		Char(100)			NULL,
+PropName		Char(100)			NULL,
+NonPropName		Char (100)			NULL,
+Labeler			Char (100)			NULL	
+
+CONSTRAINT	DrugPK	PRIMARY KEY (DrugID)
+);
+
+
+CREATE TABLE OFFICE (
+	
+OfficeID			Int			NOT NULL,
+Location			Char (100)			NULL,
+RoomNo			Int			NULL,
+SizeSqFt			Int			NULL,
+Technology		Char (100)			NULL
+
+CONSTRAINT		OfficePK		PRIMARY KEY (OfficeID)
+);
+
+CREATE TABLE PHYSICIAN(
+	
+PhysicianID		Int			NOT NULL,
+FirstName		Char (100)			NULL,
+LastName		Char (100)			NULL,
+SSN			Int			NULL,
+DOB			Datetime			NULL,
+Gender			Char (100)			NULL,
+Address			Char (100)		NULL,
+DateHired		Char (100)			NULL,
+Specialization		Char (100)			NULL,
+HighestDegree		Char (100)			NULL,
+OfficeID			Int			NULL
+
+CONSTRAINT	PhysicianPK	PRIMARY KEY (PhysicianID)
+);
+
+CREATE TABLE NURSE(
+	
+NurseID			Int			NOT NULL,
+FirstName		Char (100)			NULL,
+LastName		Char (100)			NULL,
+SSN			Int			NULL,
+DOB			Datetime			NULL,
+Gender			Char (100)			NULL,
+Address			Char (100)		NULL,
+OfficeID			Int			NULL
+
+CONSTRAINT	NursePK		PRIMARY KEY (NurseID)
+);
+
+
+CREATE TABLE PATIENT(
+	PatientID	Int			NOT NULL,
+	FirstName	Char (100)			NULL,
+	LastName	Char (100)       		NULL,
+	SSN			Int			NULL,
+	DOB         Datetime        		NULL,
+	Gender		Char (100) 			NULL,
+	Address    	Char (100)     		NULL,
+	Phone		Char (100)			NULL,
+	PrimaryIns	Char (100)  		NULL,
+	PhysicianID	Int			 NULL,
+
+	CONSTRAINT	PatientPK          	PRIMARY KEY (PatientID) 
+);
+
+/* End of Code */
+
+/* Start of Code */
+
+/* Create the relationships by adding the FK definitions */ 
+
+ALTER TABLE PHYSICIAN ADD CONSTRAINT PhysicianFK FOREIGN KEY (OfficeID)
+	 					 REFERENCES OFFICE (OfficeID)
+						 ON UPDATE CASCADE
+					        	 ON DELETE NO ACTION
+;
+
+ALTER TABLE NURSE ADD CONSTRAINT NurseFK FOREIGN KEY (OfficeID)
+	 					 REFERENCES OFFICE (OfficeID)
+						 ON UPDATE CASCADE
+					       	  ON DELETE NO ACTION
+;
+
+ALTER TABLE PATIENT ADD CONSTRAINT PatientFK FOREIGN KEY (PhysicianID)
+	 					 REFERENCES PHYSICIAN (PhysicianID)
+						 ON UPDATE CASCADE
+					      	 ON DELETE NO ACTION
+
+
+
+/* End of Code */
+
+
+/* Start of Code */
+
+/*Insert records into DRUG*/
+INSERT INTO DRUG (DrugID,NatDrugCode,PropName, NonPropName,Labeler)
+	     VALUES('0120','66715-9700','df','Ibuprofen', 'Lil Drug Store Products Inc.');
+
+INSERT INTO DRUG(DrugID,NatDrugCode,PropName, NonPropName,Labeler)
+	VALUES('7185','0378-1400','reer','Acebutolol Hydrochloride','Mylan Pharmaceuticals Inc.'); 
+
+INSERT INTO DRUG(DrugID,NatDrugCode,PropName, NonPropName,Labeler)
+	VALUES('1116','69842-541','rere','Acetaminophen Aspirin Caffeine','CVS Pharmacy Inc');
+
+INSERT INTO DRUG(DrugID,NatDrugCode,PropName, NonPropName,Labeler)
+	VALUES('8261','0378-2659','fhdfh','Morphine Sulfate','Mylan Pharmaceuticals Inc.');
+
+/*Insert records into OFFICE*/
+INSERT INTO OFFICE (OfficeID, Location, RoomNo, SizeSqFt, Technology)
+	       VALUES('1218', '2020 Mercy Way', '100', '600', 'Basic');
+
+INSERT INTO OFFICE (OfficeID, Location, RoomNo , SizeSqFt, Technology)
+	VALUES('1219', '2020 Mercy Way', '101', '750', 'Advanced');
+
+INSERT INTO OFFICE (OfficeID, Location, RoomNo , SizeSqFt, Technology)
+	VALUES('1220', '2020 Mercy Way', '102', '600', 'Basic');
+
+INSERT INTO OFFICE (OfficeID, Location, RoomNo , SizeSqFt, Technology)
+	VALUES('1221', '2020 Mercy Way', '103', '750', 'Advanced');
+
+INSERT INTO OFFICE (OfficeID, Location, RoomNo , SizeSqFt, Technology)
+	VALUES('1222', '2020 Mercy Way', '104', '600', 'Basic');
+
+INSERT INTO OFFICE (OfficeID, Location, RoomNo , SizeSqFt, Technology)
+	VALUES('1223', '2020 Mercy Way', '105', '750', 'Advanced');
+
+INSERT INTO OFFICE (OfficeID, Location, RoomNo , SizeSqFt, Technology)
+	VALUES('1224', '2020 Mercy Way', '106', '600','Basic');
+
+INSERT INTO OFFICE (OfficeID, Location, RoomNo , SizeSqFt, Technology)
+	VALUES('1225', '2020 Mercy Way', '107', '750', 'Advanced');
+
+
+
+/*Insert records into PHYSICIAN?note that we do not insert values for OfficeID*/
+INSERT INTO PHYSICIAN (PhysicianID, FirstName, LastName, SSN, DOB, Gender, Address, DateHired, Specialization, HighestDegree)
+	VALUES('2000','Mark','Howard','555426954','10/15/1976','Male','600 Miles Road','03/12/2002','Cardiologist','PHD');
+
+INSERT INTO PHYSICIAN (PhysicianID, FirstName, LastName, SSN, DOB, Gender, Address, DateHired, Specialization, HighestDegree)
+	VALUES('2001','Matt','Lewis','202126242','08/08/1984','Male','117 Spartan Lane','07/11/2001','Heart Surgery','PHD');
+
+INSERT INTO PHYSICIAN (PhysicianID, FirstName, LastName, SSN, DOB, Gender, Address, DateHired, Specialization, HighestDegree)
+	VALUES('2002','Rebecca','Daniels','828481523','02/22/1979','Female','714 Reynolds Road','05/19/2001','Dermatologist','PHD');
+
+INSERT INTO PHYSICIAN (PhysicianID, FirstName, LastName, SSN, DOB, Gender, Address, DateHired, Specialization, HighestDegree)
+	VALUES('2003','Lindsey','White','414049228','06/11/1972','Female','230 Main Street','11/28/2002','Anesthesiologist','PHD');
+
+
+
+
+/*Insert records into NURSE?note that we do not insert values for OfficeID*/
+INSERT INTO NURSE (NurseID, FirstName, LastName, SSN, DOB, Gender, Address)
+	      VALUES('1000','Jenny','Smith','271458441','02/10/1990','Female','471 Oak Street');
+
+INSERT INTO NURSE (NurseID, FirstName, LastName, SSN, DOB, Gender, Address)
+	VALUES('1001','Sarah','Sanders', '415719981', '11/29/1982', 'Female', '643 Jackson Street');
+
+INSERT INTO NURSE (NurseID, FirstName, LastName, SSN, DOB, Gender, Address)
+	VALUES('1002', 'Mike', 'Jefferson', '214405528', '12/31/1985', 'Male', '814 Saint Road');
+
+INSERT INTO NURSE (NurseID, FirstName, LastName, SSN, DOB, Gender, Address)
+	VALUES('1003', 'Thomas','Allen','312987629', '04/18/1978', 'Male', '8020 Norton Lane');
+
+
+
+
+/*Insert records into PATIENT ?note that we do not insert values for PhysicianID*/
+INSERT INTO PATIENT (PatientID,FirstName,LastName,SSN,DOB,Gender,Address,Phone,PrimaryIns)
+	         VALUES('0000001','James','Mitchell','963852741','07/05/1977','Male','500 Monroe Lane','4407148259','Mercy Health');
+
+
+INSERT INTO PATIENT (PatientID,FirstName,LastName,SSN,DOB,Gender,Address,Phone,PrimaryIns)
+		VALUES('0000002','John','Doe','867530900','01/01/1991','Male','706 Wooster Street','4195287195','Health Matters');
+
+INSERT INTO PATIENT (PatientID,FirstName,LastName,SSN,DOB,Gender,Address,Phone,PrimaryIns)
+		VALUES('0000003','Leah','Miller','456129837','09/24/1984','Female','922 First Street','4198188248','State Farm');
+
+INSERT INTO PATIENT (PatientID,FirstName,LastName,SSN,DOB,Gender,Address,Phone,PrimaryIns)
+		VALUES('0000004','Sally','Walters','214503897','12/12/1982','Female','871 Jerome Road','4752189642','Nationwide');
+
+
+
+
+/* End of Code */
+
+
+/* Start of Code */
+
+/*Update PHYSICIAN to add value of OfficeID */
+
+UPDATE PHYSICIAN SET OfficeID = 1219 WHERE PhysicianID = '2000';
+UPDATE PHYSICIAN SET OfficeID = 1221 WHERE PhysicianID = '2001';
+UPDATE PHYSICIAN SET OfficeID = 1223 WHERE PhysicianID = '2002';
+UPDATE PHYSICIAN SET OfficeID = 1225 WHERE PhysicianID = '2003';
+
+/*Update NURSE to add value of OfficeID */
+
+UPDATE NURSE SET OfficeID = 1218 WHERE NurseID = '1000';
+UPDATE NURSE SET OfficeID = 1220 WHERE NurseID = '1001';
+UPDATE NURSE SET OfficeID = 1222 WHERE NurseID = '1002';
+UPDATE NURSE SET OfficeID = 1224 WHERE NurseID = '1003';
+
+/*Update PATIENT to add value of PhysicianID */
+
+UPDATE PATIENT SET PhysicianID = 2000 WHERE PatientID = '0000001';
+UPDATE PATIENT SET PhysicianID = 2001 WHERE PatientID = '0000002';
+UPDATE PATIENT SET PhysicianID = 2002 WHERE PatientID = '0000003';
+UPDATE PATIENT SET PhysicianID = 2003 WHERE PatientID = '0000004';
+
+
+/* End of Code */
+
+
+
+/* Start of Code */
+
+/* Create tables INSURANCE, BILL, PRESCRIPTION, CONSULTATION, PAT_DRUG_ALGY, NUR_SCH */
+/*Problem: on update and on deletion, cascade or no action?*/
+
+CREATE TABLE INSURANCE (
+	InsID			Int			NOT NULL,
+	PatientID			Int			NULL,
+	InsProvider		Char(30)			NULL,
+	InsPlan			Char(20)			NULL,
+	InsDeductable		Int			NULL,
+	OutOfPocket		Int			NULL
+
+	CONSTRAINT 	InsurancePK			PRIMARY KEY (InsID),
+	CONSTRAINT	InsuranceFK			FOREIGN KEY (PatientID)
+							REFERENCES PATIENT (PatientID)
+							ON UPDATE CASCADE
+							ON DELETE NO ACTION,
+);
+
+
+CREATE TABLE BILL (
+	BillID			Int			NOT NULL,
+	PatientID			Int			NULL,
+	DateService		Char(20)			NULL,
+	Amount			Int			NULL,
+	PatResp			Char(20)			NULL,
+
+	CONSTRAINT 		BillPK			PRIMARY KEY (BillID),
+	CONSTRAINT		BillFK			FOREIGN KEY (PatientID)
+							REFERENCES PATIENT (PatientID)
+							ON UPDATE CASCADE
+							ON DELETE NO ACTION,
+);
+
+
+CREATE TABLE PRESCRIPTION (
+
+	PrescriptionID		Int			NOT NULL,
+	PresDate			Datetime			NULL,
+	PatientID			Int			NULL,
+	PhysicianID		Int			NULL,
+	DrugID			Int			NULL,
+	Strength			Char(20)			NULL,
+	Amount			Int			NULL,
+	Route			Char(20)			NULL,
+	Refills			Char(20)			NULL
+
+	CONSTRAINT	PrescriptionPK 		PRIMARY KEY (PrescriptionID),
+	CONSTRAINT	PrescriptionFK1		FOREIGN KEY (PatientID)
+	 					REFERENCES PATIENT(PatientID)
+						ON UPDATE CASCADE
+						ON DELETE NO ACTION,
+	CONSTRAINT	PrescriptionFK2		FOREIGN KEY (PhysicianID)
+	 					REFERENCES PHYSICIAN(PhysicianID)
+						ON UPDATE NO ACTION
+						ON DELETE NO ACTION,
+	CONSTRAINT	PrescriptionFK3		FOREIGN KEY (DrugID)
+	 					REFERENCES DRUG(DrugID)
+						ON UPDATE CASCADE
+						ON DELETE NO ACTION,
+);
+
+
+CREATE TABLE CONSULTATION (
+
+	ConsultationID	Int			NOT NULL,
+	PatientID		Int			NULL,
+	PhysicianID	Int			NULL,
+	Date		Datetime			NULL
+
+	CONSTRAINT	ConsulztionPK 		PRIMARY KEY (ConsultationID),
+	CONSTRAINT	ConsulztionFK1		FOREIGN KEY (PatientID)
+	 					REFERENCES PATIENT(PatientID)
+						ON UPDATE CASCADE
+						ON DELETE NO ACTION,
+	CONSTRAINT	ConsulztionFK2		FOREIGN KEY (PhysicianID)
+	 					REFERENCES PHYSICIAN(PhysicianID)
+						ON UPDATE NO ACTION
+						ON DELETE NO ACTION,
+);
+
+
+CREATE TABLE PAT_DRUG_ALGY (
+	PatDrugAlgyID 	Int			NOT NULL,
+	PatientID		Int			NULL,
+	DrugID		Int			NULL,
+	AlgyDate		Char(20)			NULL,
+	Reaction		Char(40)			NULL,
+	Severity		Char(30)			NULL,
+	ActionTaken	Char(40)			NULL,
+
+	CONSTRAINT	Pat_Drug_AlgyPK 		PRIMARY KEY (PatDrugAlgyID),
+	CONSTRAINT	Pat_Drug_AlgyFK1		FOREIGN KEY (PatientID)
+	 					REFERENCES PATIENT(PatientID)
+						ON UPDATE CASCADE
+						ON DELETE NO ACTION,
+	CONSTRAINT	Pat_Drug_AlgyFK2		FOREIGN KEY (DrugID)
+	 					REFERENCES Drug(DrugID)
+						ON UPDATE CASCADE
+						ON DELETE NO ACTION,
+);
+
+
+CREATE TABLE NUR_SCH (
+
+
+	SchedID			Int			NOT NULL,
+	PhysicianID		Int			NULL,
+	NurseID			Int			NULL,
+	Date			Datetime			NULL,
+	StartTime			Char (20)			NULL,
+	EndTime			Char (20)			NULL
+
+	CONSTRAINT	Nur_SchPK		PRIMARY KEY (SchedID),
+	CONSTRAINT	Nur_SchFK1		FOREIGN KEY (PhysicianID)
+	 					REFERENCES PHYSICIAN(PhysicianID)
+						ON UPDATE CASCADE
+						ON DELETE NO ACTION,
+	CONSTRAINT	Nur_SchFK2		FOREIGN KEY (NurseID)
+	 					REFERENCES NURSE(NurseID)
+						ON UPDATE NO ACTION
+						ON DELETE NO ACTION,
+);
+
+
+/* End of Code */
+
+
+
+/* Start of Code */
+
+
+/*Insert records into INSURANCE*/
+
+INSERT INTO INSURANCE (InsID,PatientID,InsProvider,InsPlan,InsDeductable,OutOfPocket)
+		VALUES('0203','0000004','Nationwide','Health','3000','400');
+
+INSERT INTO INSURANCE (InsID,PatientID,InsProvider,InsPlan,InsDeductable,OutOfPocket)
+		VALUES('0202','0000003','State Farm','Health','5000','300');
+
+INSERT INTO INSURANCE (InsID,PatientID,InsProvider,InsPlan,InsDeductable,OutOfPocket)
+		VALUES('0201','0000002','Health Matters','Health','4000','450');
+
+INSERT INTO INSURANCE (InsID,PatientID,InsProvider,InsPlan,InsDeductable,OutOfPocket)
+		VALUES('0200','0000001','Mercy Health','Health','2000','350');
+
+/*Insert records into BILL*/
+
+INSERT INTO BILL(BillID,PatientID,DateService,Amount,PatResp)
+	VALUES('50001','0000001','11/23/18','120','20');
+
+INSERT INTO BILL(BillID,PatientID,DateService,Amount,PatResp)
+	VALUES('50002','0000002','02/18/2012','100','45');
+
+INSERT INTO BILL(BillID,PatientID,DateService,Amount,PatResp)
+	VALUES('50003','0000003','11/07/2017','150','75');
+
+INSERT INTO BILL(BillID,PatientID,DateService,Amount,PatResp)
+	VALUES('50004','0000004','12/1/18','95','60');
+
+/*Insert records into PRESCRIPTION*/
+
+INSERT INTO PRESCRIPTION (PrescriptionID,PresDate,PatientID,PhysicianID,DrugID,Strength,Amount,Route,Refills)
+			VALUES('20001','11/2/18','0000002','2001','1116','50mg','20','Oral', 'Zero');
+
+INSERT INTO PRESCRIPTION (PrescriptionID,PresDate,PatientID,PhysicianID,DrugID,Strength,Amount,Route,Refills)
+					VALUES('20002','12/11/18','0000001','2002','0120','250 mg/1','150','Oral','None');
+
+INSERT INTO PRESCRIPTION (PrescriptionID,PresDate,PatientID,PhysicianID,DrugID,Strength,Amount,Route,Refills)
+			VALUES('20003','12/1/18','0000004','2001','1116','250 mg/1','100','Oral','Two');
+
+INSERT INTO PRESCRIPTION (PrescriptionID,PresDate,PatientID,PhysicianID,DrugID,Strength,Amount,Route,Refills)
+			VALUES('20004','12/3/18','0000003','2003','8261','500 mg/1','25','Oral','None');
+
+/*Insert records into CONSULTATION*/
+
+INSERT INTO CONSULTATION (ConsultationID,PatientID,PhysicianID,Date)
+		VALUES('10000','0000004','2003','07/14/2015');
+
+INSERT INTO CONSULTATION (ConsultationID,PatientID,PhysicianID,Date)
+		VALUES('10001','0000002','2001','02/18/2012');
+
+INSERT INTO CONSULTATION (ConsultationID,PatientID,PhysicianID,Date)
+		VALUES('10002','0000001','2000','04/05/2015');
+
+INSERT INTO CONSULTATION (ConsultationID,PatientID,PhysicianID,Date)
+		VALUES('10003','0000003','2002','11/07/2017');
+
+
+/*Insert records into PAT_DRUG_ALGY*/
+
+INSERT INTO PAT_DRUG_ALGY(PatDrugAlgyID,PatientID,DrugID,AlgyDate,Reaction,Severity,ActionTaken)
+		VALUES('3001','0000001','0120','10/13/17','Rash','Moderate','None');
+
+INSERT INTO PAT_DRUG_ALGY(PatDrugAlgyID,PatientID,DrugID,AlgyDate,Reaction,Severity,ActionTaken)
+		VALUES('3002','0000002','7185','09/15/18','hypotension','Extreme','Emesis');
+
+INSERT INTO PAT_DRUG_ALGY(PatDrugAlgyID,PatientID,DrugID,AlgyDate,Reaction,Severity,ActionTaken)
+		VALUES('3003','0000003','1116','8/5/18','Nausea','Moderate','Rest');
+
+INSERT INTO PAT_DRUG_ALGY(PatDrugAlgyID,PatientID,DrugID,AlgyDate,Reaction,Severity,ActionTaken)
+		VALUES('3004','0000004','8261','09/12/2018','Hyves','Mild','Topical Cream Given');
+
+
+
+/*Insert records into NUR_SCH*/
+
+INSERT INTO NUR_SCH (SchedID,PhysicianID,NurseID,Date,StartTime,EndTime)
+		Values ('200001','2000','1000','10/03/2012','12:00','18:00');
+
+
+INSERT INTO NUR_SCH (SchedID,PhysicianID,NurseID,Date,StartTime,EndTime)
+		Values ('1000001','2001','1001','09/18/2014','15:00','21:00');
+
+INSERT INTO NUR_SCH (SchedID,PhysicianID,NurseID,Date,StartTime,EndTime)
+		Values ('1000002','2002','1002','12/21/2015','8:00','16:00');
+
+INSERT INTO NUR_SCH (SchedID,PhysicianID,NurseID,Date,StartTime,EndTime)
+		Values ('1000003','2003','1003','05/04/2015','6:00','12:00');
+
+/* End of Code */
+
+
